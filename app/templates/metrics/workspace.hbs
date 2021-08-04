@@ -25,10 +25,20 @@
             Student
           </th>
           <th>
+            Answer
+          </th>
+          <th>
+            Explanation
+            <button {{action "toggleShowAll"}}>Show All</button>
+          </th>
+          <th>
             Selected By
           </th>
           <th>
             selected text
+          </th>
+          <th>
+            Folders
           </th>
           <th>
             comments
@@ -39,8 +49,19 @@
         {{#each model.selections as |selection|}}
           <tr>
             <td>{{selection.submission.student}}</td>
+            <td>{{if selection.submission.shortAnswer selection.submission.shortAnswer selection.submission.answer.answer}}</td>
+            <td>{{expandable-cell showAll=showAll text=(if selection.submission.longAnswer selection.submission.longAnswer selection.submission.answer.explanation)}}</td>
             <td>{{selection.createdBy.username}}</td>
             <td>{{selection.text}}</td>
+            <td>
+              <ul>
+                {{#each selection.folders as |folder|}}
+                <li>
+                  {{folder.name}}
+                </li>
+                {{/each}}
+              </ul>
+            </td>
             <td>
               <ul>
                 {{#each selection.comments as |comment|}}
