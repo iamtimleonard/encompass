@@ -5,12 +5,16 @@ import { hash } from 'rsvp';
  * @description Route for dealing with all assignment objects
  */
 export default class AssignmentsRoute extends AuthenticatedRoute {
-  model() {
+  async model() {
     let currentUser = this.modelFor('application');
-    let assignments = this.store.findAll('assignment');
+    let assignments = await this.store.findAll('assignment');
+    let assignmentList = assignments.filter((assignment) => {
+      return assignment.id && !assignment.get('isTrashed');
+    });
     return hash({
       currentUser,
       assignments,
+      assignmentList,
     });
   }
 }
