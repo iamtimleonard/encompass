@@ -78,8 +78,19 @@
     <table class="metrics__table">
       <thead>
         <tr>
-          <th>
+          <th rowspan="2">
             Label
+          </th>
+          <th colspan="2">
+            Contents
+          </th>
+        </tr>
+        <tr>
+          <th>
+            Text
+          </th>
+          <th>
+            Student
           </th>
         </tr>
       </thead>
@@ -87,6 +98,20 @@
         {{#each model.folders as |folder|}}
           <tr>
             <td>{{folder.name}}</td>
+            <td>
+              <ol>
+                {{#each folder.cleanSelections as |selection|}}
+                  <li>{{selection.text}}</li>
+                {{/each}}
+              </ol>
+            </td>
+            <td>
+              <ol>
+              {{#each folder.cleanSelections as |selection|}}
+                <li>{{selection.submission.student}}</li>
+              {{/each}}
+              </ol>
+            </td>
           </tr>
         {{/each}}
       </tbody>
