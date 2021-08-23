@@ -10,6 +10,16 @@ export default class MetricsWorkspaceController extends Controller {
   @tracked showSubmissions = false;
   @tracked showAll = false;
   @tracked showCloud = false;
+  @tracked displayStudents = true;
+  @tracked displayAnswers = true;
+  @tracked displayExplanations = true;
+  @tracked displaySelectedBy = true;
+  @tracked displaySelectedText = true;
+  @tracked displayFolders = true;
+  @tracked displayComments = true;
+  @action toggleColumn(name) {
+    this[name] = !this[name];
+  }
   @action
   toggleShowAll() {
     this.showAll = !this.showAll;
@@ -26,7 +36,51 @@ export default class MetricsWorkspaceController extends Controller {
   }
   get list() {
     // eslint-disable-next-line prettier/prettier
-    const ignore = ['the', 'and', 'of', 'in', 'on', 'into', 'to', 'a', 'is', 'that', 'you', 'i', 'was', 'would', 'at', 'your', 'my', 'for', 'but', 'it', 'if', 'or', '', 'this', 'what', 'she', 'he', 'off', 'be', 'is', 'are', 'was', 'have', 'can', 'did', 'we', 'me', 'our', 'very', 'which', 'had', 'not', 'do'];
+    const ignore = [
+      'the',
+      'and',
+      'of',
+      'in',
+      'on',
+      'into',
+      'to',
+      'a',
+      'is',
+      'that',
+      'you',
+      'i',
+      'was',
+      'would',
+      'at',
+      'your',
+      'my',
+      'for',
+      'but',
+      'it',
+      'if',
+      'or',
+      '',
+      'this',
+      'what',
+      'she',
+      'he',
+      'off',
+      'be',
+      'is',
+      'are',
+      'was',
+      'have',
+      'can',
+      'did',
+      'we',
+      'me',
+      'our',
+      'very',
+      'which',
+      'had',
+      'not',
+      'do',
+    ];
     const result = {};
     const comments = this.model.comments.mapBy('text');
     const responses = this.model.comments.mapBy('responses');

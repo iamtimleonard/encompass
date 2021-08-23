@@ -21,39 +21,52 @@
     <table class="metrics__table">
       <thead>
         <tr>
-          <th>
-            Student
+          <th {{on "click" (fn this.toggleColumn 'displayStudents')}}>
+            {{if this.displayStudents "Student"}}
           </th>
-          <th>
-            Answer
+          <th {{on "click" (fn this.toggleColumn 'displayAnswers')}}>
+            {{if this.displayAnswers "Answer"}}
           </th>
-          <th>
+          <th {{on "click" (fn this.toggleColumn 'displayExplanations')}}>
+            {{#if this.displayExplanations}}
             Explanation
             <button {{action "toggleShowAll"}}>Show All</button>
+            {{/if}}
           </th>
-          <th>
-            Selected By
+          <th {{on "click" (fn this.toggleColumn 'displaySelectedBy')}}>
+            {{if this.displaySelectedBy "Selected By"}}
           </th>
-          <th>
-            selected text
+          <th {{on "click" (fn this.toggleColumn 'displaySelectedText')}}>
+            {{if this.displaySelectedText "Selected Text"}}
           </th>
-          <th>
-            Folders
+          <th {{on "click" (fn this.toggleColumn 'displayFolders')}}>
+            {{if this.displayFolders "Folders"}}
           </th>
-          <th>
-            comments
+          <th {{on "click" (fn this.toggleColumn 'displayComments')}}>
+            {{if this.displayComments "Comments"}}
           </th>
         </tr>
       </thead>
       <tbody>
         {{#each model.selections as |selection|}}
           <tr>
-            <td>{{selection.submission.student}}</td>
-            <td>{{if selection.submission.shortAnswer selection.submission.shortAnswer selection.submission.answer.answer}}</td>
-            <td>{{expandable-cell showAll=showAll text=(if selection.submission.longAnswer selection.submission.longAnswer selection.submission.answer.explanation)}}</td>
-            <td>{{selection.createdBy.username}}</td>
-            <td>{{selection.text}}</td>
+            <td>{{if displayStudents selection.submission.student}}</td>
             <td>
+              {{#if this.displayAnswers}}
+                {{if selection.submission.shortAnswer selection.submission.shortAnswer selection.submission.answer.answer}}
+              {{/if}}
+            </td>
+            <td>
+              {{#if this.displayExplanations}}
+                {{expandable-cell showAll=showAll text=(if selection.submission.longAnswer selection.submission.longAnswer selection.submission.answer.explanation)}}
+              {{/if}}
+            </td>
+            <td>
+              {{if this.displaySelectedBy selection.createdBy.username}}
+            </td>
+            <td>{{if this.displaySelectedText selection.text}}</td>
+            <td>
+              {{#if this.displayFolders}}
               <ul>
                 {{#each selection.folders as |folder|}}
                 <li>
@@ -61,13 +74,16 @@
                 </li>
                 {{/each}}
               </ul>
+              {{/if}}
             </td>
             <td>
+              {{#if this.displayComments}}
               <ul>
                 {{#each selection.comments as |comment|}}
                   <li>{{comment.text}} - {{comment.createdBy.username}}</li>
                 {{/each}}
               </ul>
+              {{/if}}
             </td>
           </tr>
         {{/each}}
